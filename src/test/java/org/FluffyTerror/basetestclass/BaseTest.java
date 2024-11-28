@@ -1,7 +1,9 @@
 package org.FluffyTerror.basetestclass;
 
 import org.FluffyTerror.managers.DriverManager;
+import org.FluffyTerror.managers.InitManager;
 import org.FluffyTerror.managers.PageManager;
+import org.FluffyTerror.managers.PropertyManager;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -22,7 +24,7 @@ public class BaseTest {
 
     @Before
     public void  beforeEach(){
-        driverManager.getDriver().get(TestPropManager.getTestPropManager().getProperty(BASE_URL));
+        driverManager.getDriver().get(PropertyManager.getPropertyManager().getProperty("https://qualit.appline.ru/"));
 
     }
     @AfterClass
