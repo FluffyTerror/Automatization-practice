@@ -26,7 +26,7 @@ public class HomePage extends BasePage{
     public HomePage selectBaseMenu(String nameBaseMenu) {
         for (WebElement menuItem : listBaseMenu) {
             if (menuItem.getText().trim().equalsIgnoreCase(nameBaseMenu)) {
-                pause(1.5);
+                sleep(1500);
 
                 waitUtilElementToBeClickable(menuItem).click();
                 return this;
@@ -44,7 +44,7 @@ public class HomePage extends BasePage{
     public FoodPage selectSubMenu(String nameSubMenu) {
         for (WebElement menuItem : listSubMenu) {
             if (menuItem.getText().equalsIgnoreCase(nameSubMenu)) {
-                pause(1.5);
+                sleep(1500);
                 waitUtilElementToBeClickable(menuItem).click();
 
                 return pageManager.getFoodPage().checkOpenFoodPage();
@@ -54,10 +54,14 @@ public class HomePage extends BasePage{
         return pageManager.getFoodPage();
     }
 
-    public FoodPage selectReset(){
+    /**
+     * Выполняет сброс данных, кликая по кнопке "Reset", и возвращает страницу "FoodPage".
+     *
+     * @return FoodPage - возвращает объект FoodPage для работы после сброса данных.
+     */
+    public FoodPage selectReset() {
         waitUtilElementToBeClickable(ResetButton).click();
-        pause(1.5);
+        sleep(1500);
         return pageManager.getFoodPage();
-
     }
 }

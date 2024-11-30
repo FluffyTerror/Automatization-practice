@@ -16,14 +16,13 @@ import java.time.Duration;
 
 public class BasePage {
 
-    protected void pause(double seconds) {
-        try {
-            WebDriverWait dynamicWait = new WebDriverWait(driverManager.getDriver(), Duration.ofSeconds((long) seconds));
-            dynamicWait.until(driver -> false); // Пустое условие для ожидания
-        } catch (Exception e) {
-            System.err.println("Ошибка во время паузы: " + e.getMessage());
-        }
+public void sleep(long sec){
+    try {
+        Thread.sleep(sec);
+    }catch (Exception e){
+        System.out.println(e);
     }
+}
 
     protected final DriverManager driverManager = DriverManager.getDriverManager();
 

@@ -39,7 +39,7 @@ public class PageManager {
     /**
      * Ленивая инициализация HomePage
      *
-     * @return HomeManager
+     * @return HomePage
      */
     public HomePage getHomePage(){
         if(homePage==null){
@@ -51,7 +51,7 @@ public class PageManager {
     /**
      * Ленивая инициализация AddPage
      *
-     * @return AddManager
+     * @return AddPage
      */
     public AddPage getAddPage() {
         if (addPage==null){

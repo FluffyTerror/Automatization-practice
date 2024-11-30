@@ -17,7 +17,7 @@ public class PropsManger {
 
 
         /**
-         * Переменна для хранения объекта TestPropManager
+         * Переменна для хранения объекта PropsManager
          */
         private static PropsManger INSTANCE = null;
 
@@ -25,8 +25,6 @@ public class PropsManger {
         /**
          * Конструктор специально был объявлен как private (singleton паттерн)
          * Происходит загрузка содержимого файла application.properties в переменную {@link #properties}
-         *
-         *
          */
         private PropsManger() {
             loadApplicationProperties();
@@ -34,9 +32,9 @@ public class PropsManger {
 
 
         /**
-         * Метод ленивой инициализации TestPropManager
+         * Метод ленивой инициализации PropsManager
          *
-         * @return TestPropManager - возвращает TestPropManager
+         * @return PropsManager - возвращает PropsManager
          */
         public static PropsManger getPropsManager() {
             if (INSTANCE == null) {

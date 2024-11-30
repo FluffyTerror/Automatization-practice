@@ -12,15 +12,26 @@ public class FoodPage extends BasePage {
     @FindBy(xpath = "//button[@data-toggle ='modal']")
     private WebElement AddButton;
 
+    /**
+     * Проверяет, что страница "FoodPage" открыта, ожидая видимости заголовка.
+     *
+     * @return FoodPage - возвращает текущий объект FoodPage.
+     */
     public FoodPage checkOpenFoodPage() {
         waitUtilElementToBeVisible(foodTitle);
-        Assertions.assertEquals("Список товаров", foodTitle.getText(), "Заголовок отсутствует/не соответствует требуемому");
+        Assertions.assertEquals("Список товаров", foodTitle.getText(),
+                "Заголовок отсутствует/не соответствует требуемому");
         return this;
     }
 
+    /**
+     * Переходит на страницу добавления товаров, кликая на кнопку "Add".
+     *
+     * @return AddPage - возвращает объект AddPage для работы с новой страницей.
+     */
     public AddPage selectAddPage() {
         waitUtilElementToBeClickable(AddButton).click();
-        pause(1.5);
+        sleep(1500);
         return pageManager.getAddPage();
     }
 }

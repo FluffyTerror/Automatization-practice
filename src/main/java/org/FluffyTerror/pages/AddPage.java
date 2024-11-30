@@ -37,7 +37,7 @@ public class AddPage extends BasePage {
      */
     public AddPage selectProductType(String productType) {
         waitUtilElementToBeVisible(selectTypeDropdown);
-        pause(1.5);
+        sleep(1500);
         Select dropdown = new Select(selectTypeDropdown);
         try {
             dropdown.selectByValue(productType); // Выбор значения по значению (FRUIT или VEGETABLE)
@@ -60,7 +60,7 @@ public class AddPage extends BasePage {
      */
     public AddPage save(){
         waitUtilElementToBeVisible(saveButton).click();
-        pause(1.5);
+        sleep(1500);
         return PageManager.getPageManager().getFoodPage().selectAddPage();
     }
     /**
@@ -68,7 +68,7 @@ public class AddPage extends BasePage {
      */
     public AddPage save_fin(){
         waitUtilElementToBeVisible(saveButton).click();
-        pause(1.5);
+        sleep(1500);
         return PageManager.getPageManager().getAddPage();
     }
 
