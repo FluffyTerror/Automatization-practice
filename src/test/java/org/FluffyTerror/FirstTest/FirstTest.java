@@ -7,13 +7,46 @@ import org.junit.jupiter.api.Test;
 public class FirstTest extends BaseTest {
 
     @Test
-    public void testFruit(){
+    public void testVegetable(){
         app.getHomePage()
                 .selectBaseMenu("Песочница")
-                .selectSubMenu("Продукты")
-                .checkOpenFoodPage();
-
-
+                .selectSubMenu("Товары")
+                .checkOpenFoodPage()
+                .selectAddPage()
+                .checkOpenAddPage()
+                .fillName("Артишок")
+                .selectProductType("VEGETABLE")
+                .makeExotic()
+                .save()
+                .checkOpenAddPage()
+                .fillName("Картошка")
+                .selectProductType("VEGETABLE")
+                .save_fin();
+        clearData();
     }
 
+    @Test
+    public void testFruit(){
+
+        app.getHomePage()
+                .selectBaseMenu("Песочница")
+                .selectSubMenu("Товары")
+                .checkOpenFoodPage()
+                .selectAddPage()
+                .checkOpenAddPage()
+                .fillName("Манго")
+                .selectProductType("FRUIT")
+                .makeExotic()
+                .save()
+                .checkOpenAddPage()
+                .fillName("Груша")
+                .selectProductType("FRUIT")
+                .save_fin();
+        clearData();
+    }
+    private void clearData(){
+        app.getHomePage()
+                .selectBaseMenu("Песочница")
+                .selectReset();
+    }
 }

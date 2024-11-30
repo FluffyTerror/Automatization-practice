@@ -1,10 +1,10 @@
 package org.FluffyTerror.managers;
-
 import org.FluffyTerror.pages.AddPage;
 import org.FluffyTerror.pages.FoodPage;
 import org.FluffyTerror.pages.HomePage;
 
 public class PageManager {
+
 
     private FoodPage foodPage;
 
@@ -40,12 +40,22 @@ public class PageManager {
     private PageManager() {
     }
 
+
+
+    /**
+     * Ленивая инициализация PageManager
+     *
+     * @return PageManager
+     */
+
     public static PageManager getPageManager() {
         if (pageManager == null) {
             pageManager = new PageManager();
         }
         return pageManager;
     }
+
+
 
 
 }
