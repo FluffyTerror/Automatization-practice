@@ -10,32 +10,22 @@ import static org.FluffyTerror.utils.Const.*;
 
 public class DriverManager {
 
-
-
-
-
     /**
-     * Переменна для хранения объекта веб-драйвера
+     * Переменная для хранения объекта веб-драйвера
      *
      * @see WebDriver
      */
     private WebDriver driver;
 
-
     /**
-     * Переменна для хранения объекта DriverManager
+     * Переменная для хранения объекта DriverManager
      */
     private static DriverManager INSTANCE = null;
 
-
-
     private final PropsManger props = PropsManger.getPropsManager();
 
-
     /**
-     * Конструктор специально был объявлен как private (singleton паттерн)
-     *
-     * @see DriverManager#getDriverManager()
+     * Конструктор объявлен как private (singleton паттерн)
      */
     private DriverManager() {
     }
@@ -45,34 +35,28 @@ public class DriverManager {
      *
      * @return DriverManager - возвращает DriverManager
      */
-
     public static DriverManager getDriverManager() {
         if (INSTANCE == null) {
             INSTANCE = new DriverManager();
         }
         return INSTANCE;
     }
-    
-    /**
-     * Метод ленивой инициализации веб драйвера
-     *
-     * @return WebDriver - возвращает веб драйвер
-     */
 
+    /**
+     * Метод ленивой инициализации веб-драйвера
+     *
+     * @return WebDriver - возвращает веб-драйвер
+     */
     public WebDriver getDriver() {
         if (driver == null) {
             initDriver();
         }
         return driver;
     }
-    
 
     /**
      * Метод для закрытия сессии драйвера и браузера
-     *
-     * @see WebDriver#quit()
      */
-
     public void quitDriver() {
         if (driver != null) {
             driver.quit();
@@ -80,29 +64,31 @@ public class DriverManager {
         }
     }
 
-
-    private void initDriver() {
-        System.setProperty("webdriver.chrome.driver", props.getProperty(PATH_CHROMEDRIVER));
-        driver = new ChromeDriver();
-
-
     /**
-     * Метод инициализирующий веб драйвер
+     * Метод инициализирующий веб-драйвер
      */
     private void initDriver() {
         if (OS.isFamilyWindows()) {
             initDriverWindowsOsFamily();
+        } else {
+            // Можно добавить поддержку других ОС, если требуется
+            Assertions.fail("Поддерживаются только ОС семейства Windows");
         }
     }
 
     /**
-     * Метод инициализирующий веб драйвер под ОС семейства Windows
+     * Метод инициализирующий веб-драйвер под ОС семейства Windows
      */
-    private void initDriverWindowsOsFamily(){
+    private void initDriverWindowsOsFamily() {
         initDriverAnyOsFamily(PATH_GECKO_DRIVER, PATH_CHROME_DRIVER);
     }
-    
 
+    /**
+     * Метод инициализирующий драйвер в зависимости от типа браузера
+     *
+     * @param gecko  путь к драйверу для Firefox
+     * @param chrome путь к драйверу для Chrome
+     */
     private void initDriverAnyOsFamily(String gecko, String chrome) {
         switch (props.getProperty(TYPE_BROWSER)) {
             case "firefox":
@@ -114,11 +100,7 @@ public class DriverManager {
                 driver = new ChromeDriver();
                 break;
             default:
-                Assertions.fail("Типа браузера '" + props.getProperty(TYPE_BROWSER) + "' не существует во фреймворке");
+                Assertions.fail("Тип браузера '" + props.getProperty(TYPE_BROWSER) + "' не поддерживается");
         }
     }
-
 }
-
-
-
