@@ -20,7 +20,7 @@ public class FoodPage extends BasePage {
 
     public AddPage selectAddPage() {
         waitUtilElementToBeClickable(AddButton).click();
-        sleep();
+        pause(1.5);
         return pageManager.getAddPage();
     }
 }

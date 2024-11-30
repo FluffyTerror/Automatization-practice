@@ -17,10 +17,16 @@ public class HomePage extends BasePage{
     @FindBy(xpath = "//a[@id ='reset']")
     private WebElement ResetButton;
 
+    /**
+     * Функция наведения мыши на любой пункт меню
+     *
+     * @param nameBaseMenu - наименование меню
+     * @return HomePage - т.е. остаемся на этой странице
+     */
     public HomePage selectBaseMenu(String nameBaseMenu) {
         for (WebElement menuItem : listBaseMenu) {
             if (menuItem.getText().trim().equalsIgnoreCase(nameBaseMenu)) {
-                sleep();
+                pause(1.5);
 
                 waitUtilElementToBeClickable(menuItem).click();
                 return this;
@@ -38,7 +44,7 @@ public class HomePage extends BasePage{
     public FoodPage selectSubMenu(String nameSubMenu) {
         for (WebElement menuItem : listSubMenu) {
             if (menuItem.getText().equalsIgnoreCase(nameSubMenu)) {
-                sleep();
+                pause(1.5);
                 waitUtilElementToBeClickable(menuItem).click();
 
                 return pageManager.getFoodPage().checkOpenFoodPage();
@@ -47,12 +53,11 @@ public class HomePage extends BasePage{
         Assertions.fail("Подменю '" + nameSubMenu + "' не было найдено на стартовой странице!");
         return pageManager.getFoodPage();
     }
+
     public FoodPage selectReset(){
         waitUtilElementToBeClickable(ResetButton).click();
-        sleep();
+        pause(1.5);
         return pageManager.getFoodPage();
 
     }
-
-
 }

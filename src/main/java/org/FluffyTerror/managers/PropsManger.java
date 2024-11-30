@@ -7,7 +7,6 @@ import java.util.Properties;
 
 public class PropsManger {
 
-
         /**
          * Переменна для хранения данных считанных из файла properties и переданных пользователем
          * Т.е. переменная для хранения пользовательских properties
@@ -62,13 +61,15 @@ public class PropsManger {
             }
         }
 
+    /**
+     * Метод возвращает значения записанное в ключе в переменной {@link #properties}, если нет переменной вернет null
+     *
+     * @param key - ключ, значения которого хотите получить
+     * @return String - строка со значением ключа
+     */
     public String getProperty(String key) {
         return properties.getProperty(key);
     }
-    public String getProperty(String key, String defaultValue) {
-        return properties.getProperty(key, defaultValue);
-    }
-
-    }
+}
 
 

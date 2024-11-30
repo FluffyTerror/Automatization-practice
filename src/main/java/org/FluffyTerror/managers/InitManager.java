@@ -1,11 +1,5 @@
 package org.FluffyTerror.managers;
-
-import org.FluffyTerror.managers.DriverManager;
-import org.FluffyTerror.managers.PageManager;
-import org.FluffyTerror.managers.PropsManger;
-
 import java.util.concurrent.TimeUnit;
-
 import static org.FluffyTerror.utils.Const.IMPLICITLY_WAIT;
 import static org.FluffyTerror.utils.Const.PAGE_LOAD_TIMEOUT;
 

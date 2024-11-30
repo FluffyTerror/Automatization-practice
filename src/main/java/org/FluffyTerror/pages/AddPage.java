@@ -37,7 +37,7 @@ public class AddPage extends BasePage {
      */
     public AddPage selectProductType(String productType) {
         waitUtilElementToBeVisible(selectTypeDropdown);
-        sleep();
+        pause(1.5);
         Select dropdown = new Select(selectTypeDropdown);
         try {
             dropdown.selectByValue(productType); // Выбор значения по значению (FRUIT или VEGETABLE)
@@ -47,19 +47,28 @@ public class AddPage extends BasePage {
         return this;
     }
 
+    /**
+     * Ставит чекбокс экзотический в состояние активен
+     */
     public AddPage makeExotic(){
         waitUtilElementToBeVisible(exoticCheckbox).click();
         return this;
     }
 
+    /**
+     * Функция нажатия на кнопку сохранить
+     */
     public AddPage save(){
         waitUtilElementToBeVisible(saveButton).click();
-        sleep();
+        pause(1.5);
         return PageManager.getPageManager().getFoodPage().selectAddPage();
     }
+    /**
+     * Вспомогательная функция которая выполняет то же что и save, но возвращает другой тип данных
+     */
     public AddPage save_fin(){
         waitUtilElementToBeVisible(saveButton).click();
-        sleep();
+        pause(1.5);
         return PageManager.getPageManager().getAddPage();
     }
 
