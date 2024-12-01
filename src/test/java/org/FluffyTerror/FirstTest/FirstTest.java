@@ -1,12 +1,15 @@
 package org.FluffyTerror.FirstTest;
 
 import org.FluffyTerror.basetestclass.BaseTest;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+
 
 
 public class FirstTest extends BaseTest {
 
     @Test
+    @Disabled("Другая практическая")
     public void testVegetable(){
         app.getHomePage()
                 .selectBaseMenu("Песочница")
@@ -26,8 +29,8 @@ public class FirstTest extends BaseTest {
     }
 
     @Test
+    @Disabled("Другая практическая")
     public void testFruit(){
-
         app.getHomePage()
                 .selectBaseMenu("Песочница")
                 .selectSubMenu("Товары")
@@ -44,6 +47,10 @@ public class FirstTest extends BaseTest {
                 .save_fin();
         clearData();
     }
+
+
+
+
     private void clearData(){
         app.getHomePage()
                 .selectBaseMenu("Песочница")
