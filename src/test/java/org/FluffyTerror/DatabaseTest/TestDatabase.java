@@ -11,134 +11,150 @@ public class TestDatabase extends FirstTest {
 
     @Test
     public void testAddNewSql() throws SQLException {
-        // Шаги из прошлых практик
+        //параметры для теста
+        String name = "Артишок";
+        String type = "VEGETABLE";
+        boolean isExotic = true;
+
         app.getHomePage()
                 .selectBaseMenu("Песочница")
                 .selectSubMenu("Товары")
                 .checkOpenFoodPage()
                 .selectAddPage()
                 .checkOpenAddPage()
-                .fillName("Артишок")
-                .selectProductType("VEGETABLE")
+                .fillName(name)
+                .selectProductType(type)
                 .makeExotic()
                 .save_fin();
 
-        // Выносим как отдельные переменные для удобства
         String jdbcUrl = "jdbc:h2:tcp://localhost:9092/mem:testdb";
         String user = "user";
         String password = "pass";
 
-        try (Connection connection = DriverManager.getConnection(jdbcUrl, user, password);
-             Statement statement = connection.createStatement())
-        {
-            // Проверка добавления записи
-            String query = "SELECT * FROM FOOD WHERE FOOD_NAME = 'Артишок'";
-            try (ResultSet resultSet = statement.executeQuery(query)) {
-                while (resultSet.next()) {
-                    int id = resultSet.getInt("FOOD_ID");
-                    String name = resultSet.getString("FOOD_NAME");
-                    String type = resultSet.getString("FOOD_TYPE");
-                    boolean exotic = resultSet.getBoolean("FOOD_EXOTIC");
-                    System.out.printf("Нашли добавленный продукт: %d, %s, %s, %b%n", id, name, type, exotic);
+        try (Connection connection = DriverManager.getConnection(jdbcUrl, user, password)) {
+            // Добавление
+            String insertQuery = "INSERT INTO FOOD (FOOD_NAME, FOOD_TYPE, FOOD_EXOTIC) VALUES (?, ?, ?)";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
+                preparedStatement.setString(1, name);
+                preparedStatement.setString(2, type);
+                preparedStatement.setBoolean(3, isExotic);
+                preparedStatement.executeUpdate();
+            }
+            System.out.println("________________________________________");
+            // Проверка записи
+            String selectQuery = "SELECT * FROM FOOD WHERE FOOD_NAME = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(selectQuery)) {
+                preparedStatement.setString(1, name);
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    while (resultSet.next()) {
+                        int id = resultSet.getInt("FOOD_ID");
+                        String foodName = resultSet.getString("FOOD_NAME");
+                        String foodType = resultSet.getString("FOOD_TYPE");
+                        boolean exotic = resultSet.getBoolean("FOOD_EXOTIC");
+                        System.out.printf("Продукт: %d, %s, %s, %b%n", id, foodName, foodType, exotic);
+                    }
                 }
             }
+            System.out.println("________________________________________");
             // Удаление записи
-            String deleteQuery = "DELETE FROM FOOD WHERE FOOD_NAME = 'Артишок'";
-            int rowsAffected = statement.executeUpdate(deleteQuery);
-            System.out.printf("Удаленных строк: %d%n", rowsAffected);
-
-            //вывод исходной бд
+            String deleteQuery = "DELETE FROM FOOD WHERE FOOD_NAME = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(deleteQuery)) {
+                preparedStatement.setString(1, name);
+                int rowsAffected = preparedStatement.executeUpdate();
+                System.out.printf("Удалено строк: %d%n", rowsAffected);
+            }
+            System.out.println("________________________________________");
+            // Вывод оставшихся записей
             String getAllQuery = "SELECT * FROM FOOD";
-            try (ResultSet resultSet = statement.executeQuery(getAllQuery)) {
+            try (PreparedStatement preparedStatement = connection.prepareStatement(getAllQuery);
+                 ResultSet resultSet = preparedStatement.executeQuery()) {
+                System.out.println("Оставшиеся продукты в БД:");
                 while (resultSet.next()) {
                     int id = resultSet.getInt("FOOD_ID");
-                    String name = resultSet.getString("FOOD_NAME");
-                    String type = resultSet.getString("FOOD_TYPE");
+                    String foodName = resultSet.getString("FOOD_NAME");
+                    String foodType = resultSet.getString("FOOD_TYPE");
                     boolean exotic = resultSet.getBoolean("FOOD_EXOTIC");
-                    System.out.printf("В исходной бд остались продукты: %d, %s, %s, %b%n", id, name, type, exotic);
+                    System.out.printf("%d, %s, %s, %b%n", id, foodName, foodType, exotic);
                 }
             }
         }
-        System.out.println("________________________________________");
     }
 
-    /**
-     * Обращаю внимание на то, что данный тест немного отличается от указанного в тест кейсе,
-     * а именно тем, что я тут вызвал свою собственную ошибку которую я хотел бы видеть при нахождении дубликатов
-     * надеюсь это не сильно противоречит заданию
-     * @throws SQLException
-     */
     @Test
     public void testExistingSql() throws SQLException {
-        // Шаги UI-тестирования
+        //параметры для теста
+        String name = "Яблоко";
+        String type = "FRUIT";
+
         app.getHomePage()
                 .selectBaseMenu("Песочница")
                 .selectSubMenu("Товары")
                 .checkOpenFoodPage()
                 .selectAddPage()
                 .checkOpenAddPage()
-                .fillName("Яблоко")
-                .selectProductType("FRUIT")
+                .fillName(name)
+                .selectProductType(type)
                 .save_fin();
 
-        // Работа с базой данных
         String jdbcUrl = "jdbc:h2:tcp://localhost:9092/mem:testdb";
         String user = "user";
         String password = "pass";
 
-        try (Connection connection = DriverManager.getConnection(jdbcUrl, user, password);
-             Statement statement = connection.createStatement()) {
-
-            // Проверка наличия дублей
-            try {
-                String duplicateCheckQuery = "SELECT COUNT(*) AS count FROM FOOD WHERE FOOD_NAME = 'Яблоко'";
-                try (ResultSet resultSet = statement.executeQuery(duplicateCheckQuery)) {
+        try (Connection connection = DriverManager.getConnection(jdbcUrl, user, password)) {
+            // Проверка на дубли
+            String duplicateCheckQuery = "SELECT COUNT(*) AS count FROM FOOD WHERE FOOD_NAME = ? AND FOOD_TYPE = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(duplicateCheckQuery)) {
+                preparedStatement.setString(1, name);
+                preparedStatement.setString(2, type);
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
                     if (resultSet.next()) {
                         int count = resultSet.getInt("count");
                         if (count > 1) {
-                            throw new DuplicateException("Найдено " + count + " дублирующихся записей для 'Яблоко'");
+                            throw new DuplicateException(
+                                    String.format("Найдено %d дублирующихся записей для '%s' с типом '%s'", count, name, type)
+                            );
                         } else {
                             System.out.println("Дублирующихся записей не найдено.");
                         }
                     }
-                }
-            } catch (DuplicateException e) {
-                System.err.println("Ошибка: " + e.getMessage());
-            }
-            System.out.println("________________________________________");
-
-            // Проверка добавления записи
-            String query = "SELECT * FROM FOOD WHERE FOOD_NAME = 'Яблоко'";
-            try (ResultSet resultSet = statement.executeQuery(query)) {
-                while (resultSet.next()) {
-                    int id = resultSet.getInt("FOOD_ID");
-                    String name = resultSet.getString("FOOD_NAME");
-                    String type = resultSet.getString("FOOD_TYPE");
-                    boolean exotic = resultSet.getBoolean("FOOD_EXOTIC");
-                    System.out.printf("Нашли добавленный продукт: %d, %s, %s, %b%n", id, name, type, exotic);
+                } catch (DuplicateException e) {
+                    System.err.println("Ошибка: " + e.getMessage());
                 }
             }
             System.out.println("________________________________________");
+            // Удаление всех повторяющихся строк
+            String deleteDuplicatesQuery = """
+            DELETE FROM FOOD
+            WHERE FOOD_ID NOT IN (
+            SELECT MIN(FOOD_ID)
+            FROM FOOD
+            WHERE FOOD_NAME = ?
+            GROUP BY FOOD_NAME, FOOD_TYPE, FOOD_EXOTIC
+            )
+            AND FOOD_NAME = ?
+            """;
+            try (PreparedStatement preparedStatement = connection.prepareStatement(deleteDuplicatesQuery)) {
+                preparedStatement.setString(1, name);
+                preparedStatement.setString(2, name);
+                int rowsAffected = preparedStatement.executeUpdate();
+                System.out.printf("Удалено строк: %d%n", rowsAffected);
+            }
 
-            // Удаление записи
-            String deleteQuery = "DELETE FROM FOOD WHERE FOOD_ID = (SELECT MAX(FOOD_ID) FROM FOOD WHERE FOOD_NAME = 'Яблоко')";
-            int rowsAffected = statement.executeUpdate(deleteQuery);
-            System.out.printf("Удаленных строк: %d%n", rowsAffected);
             System.out.println("________________________________________");
 
             // Вывод оставшихся записей
             String getAllQuery = "SELECT * FROM FOOD";
-            try (ResultSet resultSet = statement.executeQuery(getAllQuery)) {
-                System.out.println("В исходной бд остались продукты:");
+            try (PreparedStatement preparedStatement = connection.prepareStatement(getAllQuery);
+                 ResultSet resultSet = preparedStatement.executeQuery()) {
+                System.out.println("Оставшиеся продукты в БД:");
                 while (resultSet.next()) {
                     int id = resultSet.getInt("FOOD_ID");
-                    String name = resultSet.getString("FOOD_NAME");
-                    String type = resultSet.getString("FOOD_TYPE");
+                    String foodName = resultSet.getString("FOOD_NAME");
+                    String foodType = resultSet.getString("FOOD_TYPE");
                     boolean exotic = resultSet.getBoolean("FOOD_EXOTIC");
-                    System.out.printf("%d, %s, %s, %b%n", id, name, type, exotic);
+                    System.out.printf("%d, %s, %s, %b%n", id, foodName, foodType, exotic);
                 }
             }
         }
     }
 }
-
