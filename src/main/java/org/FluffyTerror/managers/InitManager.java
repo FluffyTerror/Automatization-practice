@@ -1,4 +1,6 @@
 package org.FluffyTerror.managers;
+import org.openqa.selenium.WebDriver;
+
 import java.util.concurrent.TimeUnit;
 import static org.FluffyTerror.utils.Const.IMPLICITLY_WAIT;
 import static org.FluffyTerror.utils.Const.PAGE_LOAD_TIMEOUT;
@@ -37,6 +39,13 @@ public class InitManager {
          *
          * @see DriverManager#quitDriver()
          */
+        public static WebDriver getDriver() {
+             WebDriver driver = driverManager.getDriver();
+            if (driver == null) {
+                throw new IllegalStateException("WebDriver is not initialized. Call initFramework() first.");
+            }
+            return driver;
+        }
         public static void quitFramework() {
             driverManager.quitDriver();
         }

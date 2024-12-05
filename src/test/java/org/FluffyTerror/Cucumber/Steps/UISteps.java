@@ -3,22 +3,13 @@ package org.FluffyTerror.Cucumber.Steps;
 import io.cucumber.java.ru.*;
 import org.FluffyTerror.basetestclass.BaseTest;
 import org.FluffyTerror.managers.DriverManager;
-import org.FluffyTerror.managers.InitManager;
 
-public class VegetableSteps extends BaseTest {
-    public void sleep(long sec){
-        try {
-            Thread.sleep(sec);
-        }catch (Exception e){
-            System.out.println(e);
-        }
-    }
+public class UISteps extends BaseTest {
 
     @Допустим("открыта страница по адресу {string}")
     public void открыта_страница_по_адресу(String string) {
-        DriverManager.getDriverManager().getDriver().get("https://qualit.appline.ru/");
+        DriverManager.getDriverManager().getDriver().get(string);
     }
-
     @Допустим("^выполнено нажатие на раздел \"([^\"]*)\"$")
     public void выполнено_нажатие_на_раздел(String baseMenu) {
         app.getHomePage().selectBaseMenu(baseMenu);
@@ -34,7 +25,7 @@ public class VegetableSteps extends BaseTest {
     @Допустим("выполнено нажатие на {string}")
     public void выполнено_нажатие_на(String string) {
         app.getFoodPage().selectAddPage();
-        sleep(2);
+
     }
     @Допустим("проверка, что страница добавления товара открыта")
     public void проверка_что_страница_добавления_товара_открыта() {
