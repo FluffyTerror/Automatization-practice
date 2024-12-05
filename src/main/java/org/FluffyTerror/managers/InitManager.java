@@ -40,5 +40,8 @@ public class InitManager {
         public static void quitFramework() {
             driverManager.quitDriver();
         }
+        public static void closeFramework(){
+            driverManager.closeDriver();
+        }
 
 }
