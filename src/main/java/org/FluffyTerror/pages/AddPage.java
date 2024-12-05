@@ -39,10 +39,25 @@ public class AddPage extends BasePage {
         waitUtilElementToBeVisible(selectTypeDropdown);
         sleep(1500);
         Select dropdown = new Select(selectTypeDropdown);
+
+        // Преобразование русских значений в ожидаемые значения списка
+        String mappedValue;
+        switch (productType.toLowerCase()) {
+            case "овощ":
+                mappedValue = "VEGETABLE";
+                break;
+            case "фрукт":
+                mappedValue = "FRUIT";
+                break;
+            default:
+                Assertions.fail("Неизвестный тип продукта: '" + productType + "'. Ожидается 'овощ' или 'фрукт'.");
+                return this;
+        }
+
         try {
-            dropdown.selectByValue(productType); // Выбор значения по значению (FRUIT или VEGETABLE)
+            dropdown.selectByValue(mappedValue); // Выбор значения из выпадающего списка
         } catch (Exception e) {
-            Assertions.fail("Тип продукта '" + productType + "' недоступен в списке.");
+            Assertions.fail("Тип продукта '" + productType + "' (" + mappedValue + ") недоступен в списке.");
         }
         return this;
     }

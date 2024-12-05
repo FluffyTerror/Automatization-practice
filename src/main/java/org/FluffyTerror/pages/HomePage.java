@@ -6,6 +6,8 @@ import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 public class HomePage extends BasePage{
 
     @FindBy(xpath = "//li[@class ='nav-item dropdown']")
@@ -26,7 +28,7 @@ public class HomePage extends BasePage{
     public HomePage selectBaseMenu(String nameBaseMenu) {
         for (WebElement menuItem : listBaseMenu) {
             if (menuItem.getText().trim().equalsIgnoreCase(nameBaseMenu)) {
-                sleep(1500);
+                sleep(3500);
 
                 waitUtilElementToBeClickable(menuItem).click();
                 return this;
@@ -64,4 +66,5 @@ public class HomePage extends BasePage{
         sleep(1500);
         return pageManager.getFoodPage();
     }
+
 }

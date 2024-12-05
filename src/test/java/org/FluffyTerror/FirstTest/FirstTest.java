@@ -49,11 +49,4 @@ public class FirstTest extends BaseTest {
     }
 
 
-
-
-    private void clearData(){
-        app.getHomePage()
-                .selectBaseMenu("Песочница")
-                .selectReset();
-    }
 }

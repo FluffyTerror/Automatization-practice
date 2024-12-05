@@ -12,12 +12,18 @@ import org.junit.jupiter.api.BeforeEach;
 
 import static org.FluffyTerror.utils.Const.BASE_URL;
 
+//annotations
 
 public class BaseTest {
     protected PageManager app = PageManager.getPageManager();
 
     private final DriverManager driverManager = DriverManager.getDriverManager();
 
+    public void clearData(){
+        app.getHomePage()
+                .selectBaseMenu("Песочница")
+                .selectReset();
+    }
 
     @BeforeAll
     public static void beforeAll(){

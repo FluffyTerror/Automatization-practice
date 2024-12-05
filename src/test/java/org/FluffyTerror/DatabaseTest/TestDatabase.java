@@ -124,15 +124,15 @@ public class TestDatabase extends FirstTest {
             System.out.println("________________________________________");
             // Удаление всех повторяющихся строк
             String deleteDuplicatesQuery = """
-            DELETE FROM FOOD
-            WHERE FOOD_ID NOT IN (
-            SELECT MIN(FOOD_ID)
-            FROM FOOD
-            WHERE FOOD_NAME = ?
-            GROUP BY FOOD_NAME, FOOD_TYPE, FOOD_EXOTIC
-            )
-            AND FOOD_NAME = ?
-            """;
+                    DELETE FROM FOOD
+                    WHERE FOOD_ID NOT IN (
+                    SELECT MIN(FOOD_ID)
+                    FROM FOOD
+                    WHERE FOOD_NAME = ?
+                    GROUP BY FOOD_NAME, FOOD_TYPE, FOOD_EXOTIC
+                    )
+                    AND FOOD_NAME = ?
+                    """;
             try (PreparedStatement preparedStatement = connection.prepareStatement(deleteDuplicatesQuery)) {
                 preparedStatement.setString(1, name);
                 preparedStatement.setString(2, name);
@@ -157,4 +157,6 @@ public class TestDatabase extends FirstTest {
             }
         }
     }
+
+
 }
