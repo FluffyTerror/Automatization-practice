@@ -4,7 +4,7 @@ import io.cucumber.java.After;
 import io.cucumber.java.AfterAll;
 import io.cucumber.java.Before;
 import org.FluffyTerror.managers.InitManager;
-import org.openqa.selenium.WebDriver;
+
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -16,9 +16,10 @@ public class Hooks {
 
     @Before(order = 1)
     public void setupDriver() {
-            WebDriver driver = InitManager.getDriver();
-            InitManager.initFramework();
+        InitManager.getDriver();
+        InitManager.initFramework();
     }
+
     @Before(order = 2)
     public void connectDb() throws SQLException {
         String jdbcUrl = "jdbc:h2:tcp://localhost:9092/mem:testdb";
