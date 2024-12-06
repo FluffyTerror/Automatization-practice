@@ -6,7 +6,6 @@ import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class HomePage extends BasePage{
 

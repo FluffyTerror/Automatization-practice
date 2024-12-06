@@ -16,20 +16,14 @@ public class Hooks {
 
     @Before(order = 1)
     public void setupDriver() {
-        try {
             WebDriver driver = InitManager.getDriver();
-            System.out.println("Веб-драйвер уже инициализирован");
-        } catch (IllegalStateException e) {
-            System.out.println("Веб-драйвер не инициализирован, создаем новый..");
             InitManager.initFramework();
-        }
     }
     @Before(order = 2)
     public void connectDb() throws SQLException {
         String jdbcUrl = "jdbc:h2:tcp://localhost:9092/mem:testdb";
         String user = "user";
         String password = "pass";
-
         try {
             connection = DriverManager.getConnection(jdbcUrl, user, password);
             System.out.println("Соединение с бд успешно");

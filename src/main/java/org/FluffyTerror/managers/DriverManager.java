@@ -63,12 +63,6 @@ public class DriverManager {
             driver = null;
         }
     }
-    public void closeDriver() {
-        if (driver != null) {
-            driver.close();
-            driver = null;
-        }
-    }
 
 
     /**

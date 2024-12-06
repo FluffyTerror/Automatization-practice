@@ -18,12 +18,12 @@ public class FirstTest extends BaseTest {
                 .selectAddPage()
                 .checkOpenAddPage()
                 .fillName("Артишок")
-                .selectProductType("VEGETABLE")
+                .selectProductType("Овощ")
                 .makeExotic()
                 .save()
                 .checkOpenAddPage()
                 .fillName("Картошка")
-                .selectProductType("VEGETABLE")
+                .selectProductType("Овощ")
                 .save_fin();
         clearData();
     }
@@ -38,12 +38,12 @@ public class FirstTest extends BaseTest {
                 .selectAddPage()
                 .checkOpenAddPage()
                 .fillName("Манго")
-                .selectProductType("FRUIT")
+                .selectProductType("Фрукт")
                 .makeExotic()
                 .save()
                 .checkOpenAddPage()
                 .fillName("Груша")
-                .selectProductType("FRUIT")
+                .selectProductType("Фрукт")
                 .save_fin();
         clearData();
     }

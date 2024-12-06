@@ -40,17 +40,10 @@ public class InitManager {
          * @see DriverManager#quitDriver()
          */
         public static WebDriver getDriver() {
-             WebDriver driver = driverManager.getDriver();
-            if (driver == null) {
-                throw new IllegalStateException("WebDriver is not initialized. Call initFramework() first.");
-            }
-            return driver;
+            return driverManager.getDriver();
         }
         public static void quitFramework() {
             driverManager.quitDriver();
-        }
-        public static void closeFramework(){
-            driverManager.closeDriver();
         }
 
 }
