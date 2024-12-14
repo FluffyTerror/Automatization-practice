@@ -5,6 +5,10 @@ import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.FluffyTerror.utils.Const.*;
 
@@ -69,11 +73,18 @@ public class DriverManager {
      * Метод инициализирующий веб-драйвер
      */
     private void initDriver() {
-        if (OS.isFamilyWindows()) {
-            initDriverWindowsOsFamily();
-        } else if (OS.isFamilyUnix()) {
-            initDriverUnixOsFamily();
+        if("remote".equalsIgnoreCase(props.getProperty("type.driver"))){
+            InitRemoteDriver();
+
+        }else {
+            if (OS.isFamilyWindows()) {
+                initDriverWindowsOsFamily();
+            } else if (OS.isFamilyUnix()) {
+                initDriverUnixOsFamily();
+            }
         }
+
+
     }
 
     /**
@@ -104,5 +115,16 @@ public class DriverManager {
             default:
                 Assertions.fail("Тип браузера '" + props.getProperty(TYPE_BROWSER) + "' не поддерживается");
         }
+    }
+    private void InitRemoteDriver(){
+        DesiredCapabilities capabilities = new DesiredCapabilities();
+        Map<String, Object> selenoidOptions = new HashMap<>();
+        capabilities.setCapability("browserName", "chrome");
+        capabilities.setCapability("browserVersion", "109.0");
+        selenoidOptions.put("enableVNC", true);
+        selenoidOptions.put("enableVideo", false);
+        capabilities.setCapability("selenoid:options", selenoidOptions);
+
+
     }
 }
