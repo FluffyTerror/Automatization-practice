@@ -71,9 +71,8 @@ public class DriverManager {
     private void initDriver() {
         if (OS.isFamilyWindows()) {
             initDriverWindowsOsFamily();
-        } else {
-            // Можно добавить поддержку других ОС, если требуется
-            Assertions.fail("Поддерживаются только ОС семейства Windows");
+        } else if (OS.isFamilyUnix()) {
+            initDriverUnixOsFamily();
         }
     }
 
@@ -83,7 +82,9 @@ public class DriverManager {
     private void initDriverWindowsOsFamily() {
         initDriverAnyOsFamily(PATH_GECKO_DRIVER, PATH_CHROME_DRIVER);
     }
-
+    private void initDriverUnixOsFamily() {
+        initDriverAnyOsFamily(PATH_GECKO_DRIVER_UNIX, PATH_CHROME_DRIVER_UNIX);
+    }
     /**
      * Метод инициализирующий драйвер в зависимости от типа браузера
      *
