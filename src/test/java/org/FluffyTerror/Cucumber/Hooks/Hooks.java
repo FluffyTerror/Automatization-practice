@@ -3,6 +3,7 @@ package org.FluffyTerror.Cucumber.Hooks;
 import io.cucumber.java.After;
 import io.cucumber.java.AfterAll;
 import io.cucumber.java.Before;
+import io.restassured.RestAssured;
 import org.FluffyTerror.managers.InitManager;
 
 
@@ -18,6 +19,7 @@ public class Hooks {
     public void setupDriver() {
         InitManager.getDriver();
         InitManager.initFramework();
+        RestAssured.baseURI = "https://qualit.applineselenoid.fvds.ru";
     }
 
     @Before(order = 2)
