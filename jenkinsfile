@@ -1,0 +1,13 @@
+node('unix') {
+    stage('Git Checkout') {
+    checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/FluffyTerror/Automatization-practice']])
+}
+    stage('Tests') {
+        withMaven(globalMavenSettingsConfig: '', jdk: '', maven: '', mavenSettingsConfig: '', traceability: true) {
+   sh 'mvn clean test -Dtype.browser=${browser}'
+}
+}
+stage('Allure') {
+   allure includeProperties: false, jdk: '', results: [[path: 'target/reports/allure-results']]
+}
+}
