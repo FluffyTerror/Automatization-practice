@@ -1,6 +1,6 @@
 node('unix') {
     stage('Git Checkout') {
-    checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/FluffyTerror/Automatization-practice']])
+    checkout scm
 }
     stage('Tests') {
         withMaven(globalMavenSettingsConfig: '', jdk: '', maven: '', mavenSettingsConfig: '', traceability: true) {
