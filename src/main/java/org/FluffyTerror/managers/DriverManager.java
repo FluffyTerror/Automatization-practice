@@ -120,15 +120,13 @@ public class DriverManager {
     }
     private void InitRemoteDriver(){
         DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setBrowserName(props.getProperty("type.browser"));
-        capabilities.setVersion("109.0");
-        capabilities.setCapability("enableVNC",true);
-        capabilities.setCapability("enableVideo",false);
-        try {
-            driver = new RemoteWebDriver(URI.create(props.getProperty("selenoid.url")).toURL(),capabilities);
-        } catch (MalformedURLException e) {
-            throw new RuntimeException(e);
-        }
+        Map<String, Object> selenoidOptions = new HashMap<>();
+        capabilities.setCapability("browserName", "chrome");
+        capabilities.setCapability("browserVersion", "109.0");
+        selenoidOptions.put("enableVNC", true);
+        selenoidOptions.put("enableVideo", false);
+        capabilities.setCapability("selenoid:options", selenoidOptions);
+
 
     }
 }
