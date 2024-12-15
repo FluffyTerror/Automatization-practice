@@ -119,7 +119,7 @@ public class DriverManager {
                 Assertions.fail("Тип браузера '" + props.getProperty(TYPE_BROWSER) + "' не поддерживается");
         }
     }
-    private void InitRemoteDriver(){
+    private void InitRemoteDriver() {
         DesiredCapabilities capabilities = new DesiredCapabilities();
         Map<String, Object> selenoidOptions = new HashMap<>();
         capabilities.setCapability("browserName", "chrome");
@@ -127,5 +127,14 @@ public class DriverManager {
         selenoidOptions.put("enableVNC", true);
         selenoidOptions.put("enableVideo", false);
         capabilities.setCapability("selenoid:options", selenoidOptions);
+        try {
+            driver = new RemoteWebDriver(
+                    URI.create(props.getProperty(SELENOID_URL)).toURL(),
+                    capabilities
+            );
+
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

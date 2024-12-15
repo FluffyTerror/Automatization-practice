@@ -9,4 +9,5 @@ public class Const {
     public static final String PATH_GECKO_DRIVER = "path.gecko.driver.windows";
     public static final String PATH_CHROME_DRIVER_UNIX = "path.chrome.driver.unix";
     public static final String PATH_GECKO_DRIVER_UNIX = "path.gecko.driver.unix";
+    public static final String SELENOID_URL = "selenoid.url";
 }

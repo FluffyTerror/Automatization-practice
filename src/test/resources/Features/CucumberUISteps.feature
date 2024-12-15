@@ -3,7 +3,7 @@
 Функционал: Управление товарами
 
   Предыстория:
-    * открыта страница по адресу "https://qualit.appline.ru/"
+    * открыта страница по адресу "https://qualit.applineselenoid.fvds.ru/"
 
   @UI
   @ALL
