@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.FluffyTerror.utils.Const.*;
+import static org.openqa.selenium.logging.LogType.BROWSER;
 
 public class DriverManager {
 
@@ -126,7 +127,5 @@ public class DriverManager {
         selenoidOptions.put("enableVNC", true);
         selenoidOptions.put("enableVideo", false);
         capabilities.setCapability("selenoid:options", selenoidOptions);
-
-
     }
 }
