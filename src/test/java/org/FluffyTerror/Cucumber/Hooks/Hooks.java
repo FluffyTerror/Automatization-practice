@@ -22,7 +22,7 @@ public class Hooks {
 
     @Before(order = 2)
     public void connectDb() throws SQLException {
-        String jdbcUrl = "jdbc:h2:tcp://localhost:9092/mem:testdb";
+        String jdbcUrl = "jdbc:h2:tcp://qualit.applineselenoid.fvds.ru/mem:testdb";
         String user = "user";
         String password = "pass";
         try {
