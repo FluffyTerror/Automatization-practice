@@ -6,7 +6,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
+import java.net.MalformedURLException;
+import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -73,9 +76,8 @@ public class DriverManager {
      * Метод инициализирующий веб-драйвер
      */
     private void initDriver() {
-        if("remote".equalsIgnoreCase(props.getProperty("type.driver"))){
+        if ("remote".equalsIgnoreCase(props.getProperty("type.driver"))){
             InitRemoteDriver();
-
         }else {
             if (OS.isFamilyWindows()) {
                 initDriverWindowsOsFamily();
@@ -118,13 +120,15 @@ public class DriverManager {
     }
     private void InitRemoteDriver(){
         DesiredCapabilities capabilities = new DesiredCapabilities();
-        Map<String, Object> selenoidOptions = new HashMap<>();
-        capabilities.setCapability("browserName", "chrome");
-        capabilities.setCapability("browserVersion", "109.0");
-        selenoidOptions.put("enableVNC", true);
-        selenoidOptions.put("enableVideo", false);
-        capabilities.setCapability("selenoid:options", selenoidOptions);
-
+        capabilities.setBrowserName(props.getProperty("type.browser"));
+        capabilities.setVersion("109.0");
+        capabilities.setCapability("enableVNC",true);
+        capabilities.setCapability("enableVideo",false);
+        try {
+            driver = new RemoteWebDriver(URI.create(props.getProperty("selenoid.url")).toURL(),capabilities);
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 }
